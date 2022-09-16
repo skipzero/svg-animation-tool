@@ -12,8 +12,8 @@ function App() {
     event.preventDefault();
     const url = 'https://localhost:3000/uploadFile'
     const formData = new FormData();
-    formData.appenmd('file', file)
-    formData.appenmd('fileName', file.name);
+    formData.append('file', file)
+    formData.append('fileName', file.name);
     const config = {
       headers: {
         'content-type': 'multipart/form-data',
