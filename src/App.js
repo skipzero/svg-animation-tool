@@ -25,7 +25,7 @@ function App() {
     })
   }
   return (
-    <form>
+    <form onSubmit={handleSubmit}>
       <h4>File Upload</h4>
       <input type="file" onChange={handleChange}/>
       <button typ="submit">Upload</button>
