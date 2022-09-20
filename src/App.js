@@ -1,35 +1,22 @@
-import React, {useState} from 'react';
-import axios from 'axios';
+import React, {useState, useRef} from 'react';
 import './App.css';
 
 function App() {
   const [file, setFile] = useState();
-  function handleChange(event) {
-    setFile(event.target.files[0])
-  }
+  const refFile = useRef();
 
   function handleSubmit(event) {
-    event.preventDefault();
-    const url = 'http://localhost:3000/uploadFile'
-    const formData = new FormData();
-    formData.append('file', file)
-    formData.append('fileName', file.name);
-    const config = {
-      headers: {
-        'content-type': 'multipart/form-data',
+    const svgFile = refFile.current.files[0]
+    const fileUrl = window.URL.createObjectURL(svgFile);
+    setFile(fileUrl);
 
-      },
-    };
-    axios.post(url, formData, config).then(res => {
-      console.log(res.data)
-    })
   }
-  return (
-    <form onSubmit={handleSubmit}>
-      <h4>File Upload</h4>
-      <input type="file" onChange={handleChange}/>
-      <button typ="submit">Upload</button>
-    </form>
+  return (<> 
+    <h4> File Upload </h4> <input type="file" ref={refFile} onChange={handleSubmit}/>
+    <button type = "submit" > Upload </button>
+    <input value={file}></input>
+    <img src={file}></img>
+    </>
   );
 }
 
