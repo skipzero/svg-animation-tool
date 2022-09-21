@@ -1,3 +1,6 @@
+html {
+  font-size: 10px;
+}
 .App {
   text-align: center;
 }
@@ -5,6 +8,12 @@
 .App-logo {
   height: 40vmin;
   pointer-events: none;
+}
+
+#file-output {
+  display: inline;
+  height: 15rem;
+  width: 25rem;
 }
 
 @media (prefers-reduced-motion: no-preference) {
