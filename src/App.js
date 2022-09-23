@@ -37,7 +37,7 @@ function App() {
     <h4> File Upload </h4> <input type="file" ref={refFile} onChange={handleSubmit}/>
     <button type = "submit" > Upload </button>
     <textarea value={file} id="file-output"></textarea>
-    <img src={fileUrl}></img>
+    <img src={fileUrl} alt="logo"></img>
     </>
   );
 }
