@@ -4,7 +4,9 @@ import './App.css';
 function App() {
   const [file, setFile] = useState();
   const [fileUrl, setFileUrl] = useState();
-  const refFile = useRef();
+  const refFile  = useRef();
+  const refSvg = useRef();
+
 
   function readFileAsync(file) {
     return new Promise((resolve, reject) => {
@@ -23,6 +25,7 @@ function App() {
     const svgFile = refFile.current.files[0]
     setFileUrl(window.URL.createObjectURL(svgFile));
     processFile(svgFile);
+    console.log('REF', refSvg)
   }
 
   async function processFile(file) {
@@ -34,12 +37,22 @@ function App() {
     }
   }
   return (<> 
+    <MyComponent />
     <h4> File Upload </h4> <input type="file" ref={refFile} onChange={handleSubmit}/>
     <button type = "submit" > Upload </button>
     <textarea value={file} id="file-output"></textarea>
-    <img src={fileUrl} alt="logo"></img>
+    <div ref={refSvg} dangerouslySetInnerHTML={{__html: file}} />
+    
     </>
   );
+}
+
+function createMarkup() {
+  return {__html: 'First &middot; Second'};
+}
+
+function MyComponent() {
+  return <div dangerouslySetInnerHTML={createMarkup()} />;
 }
 
 export default App;
