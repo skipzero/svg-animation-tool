@@ -3,21 +3,18 @@ import './App.css';
 
 function App() {
   const [file, setFile] = useState();
-  const [fileUrl, setFileUrl] = useState();
+  const [bones, setBones] = useState([]);
   const refFile  = useRef();
   const refSvg = useRef();
-  // console.group('SVG Group')
-  // console.log('file',file);
-  // console.log('RefSVG', refSvg);
-  // console.groupEnd();
 
   useEffect(() => {
     console.log('useEffect', file, refSvg)
     const {current} = refSvg;
     if (!current) return;
     if (!file) return;
-    const bones = current.querySelectorAll('.bone')
-    console.log('Bones', bones)
+    const newBones= current.querySelectorAll('.bone')
+    setBones(Array.from(newBones));
+    
 
   }, [file, refSvg])
 
@@ -36,7 +33,6 @@ function App() {
 
   function handleSubmit(event) {
     const svgFile = refFile.current.files[0]
-    setFileUrl(window.URL.createObjectURL(svgFile));
     processFile(svgFile);
     console.log('REF', refSvg)
   }
@@ -49,10 +45,18 @@ function App() {
       console.log(`ERROR: ${err}`);
     }
   }
+  console.log(typeof bones)
+  const bonesList = bones.map((bone, index) => {
+    console.log('+++', bone.className.baseVal)
+    return <li key={index}>{bone.className.baseVal}</li>
+  })
   return (<>
     <h4> File Upload </h4> <input type="file" ref={refFile} onChange={handleSubmit}/>
     <button type = "submit" > Upload </button>
     <textarea value={file} id="file-output"></textarea>
+    <ul>
+      {bonesList}
+    </ul>
     <div ref={refSvg} dangerouslySetInnerHTML={{__html: file}} />
 
     </>
