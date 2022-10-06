@@ -45,14 +45,16 @@ function App() {
       console.log(`ERROR: ${err}`);
     }
   }
-  console.log(typeof bones)
+
   const bonesList = bones.map((bone, index) => {
-    console.log('+++', bone.className.baseVal)
     return <li key={index}>{bone.className.baseVal}</li>
-  })
+  });
+  
   return (<>
-    <h4> File Upload </h4> <input type="file" ref={refFile} onChange={handleSubmit}/>
-    <button type = "submit" > Upload </button>
+    <h1> File Upload </h1> 
+    <label for="svg-upload"></label>
+    <input type="file" accept=".svg" id="svg-upload" ref={refFile} onChange={handleSubmit}/>
+    <button type="submit"> Upload </button>
     <textarea value={file} id="file-output"></textarea>
     <ul>
       {bonesList}
