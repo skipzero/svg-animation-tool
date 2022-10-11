@@ -1,4 +1,5 @@
 import React, {useState, useRef, useEffect} from 'react';
+import BonesList from './components/BonesList.jsx'
 import './App.css';
 
 function App() {
@@ -45,10 +46,6 @@ function App() {
       console.log(`ERROR: ${err}`);
     }
   }
-
-  const bonesList = bones.map((bone, index) => {
-    return <li key={index}>{bone.className.baseVal}</li>
-  });
   
   return (<>
     <h1> File Upload </h1> 
@@ -58,7 +55,7 @@ function App() {
     <button type="submit"> Upload </button>
     <textarea value={file} id="file-output"></textarea>
     <ul>
-      {bonesList}
+      <BonesList list={bones} />
     </ul>
     <div ref={refSvg} dangerouslySetInnerHTML={{__html: file}} />
 
