@@ -52,8 +52,9 @@ function App() {
   
   return (<>
     <h1> File Upload </h1> 
-    <label for="svg-upload"></label>
-    <input type="file" accept=".svg" id="svg-upload" ref={refFile} onChange={handleSubmit}/>
+    <div className="inputbox">
+      <input type="file" accept=".svg" id="svg-upload" ref={refFile} onChange={handleSubmit}/>
+    </div>
     <button type="submit"> Upload </button>
     <textarea value={file} id="file-output"></textarea>
     <ul>
