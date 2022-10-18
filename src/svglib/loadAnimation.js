@@ -1,3 +1,4 @@
+import { addBoneAnimation } from './addBoneAnimation';
 //
 // Loads the animation on child bones of elmRoot
 // Use this function to load an animation object on a bone.

@@ -1,6 +1,8 @@
+import { setOrigin } from './setOrigin';
+import { createSVGElement } from './createSVGElement';
 //
 // Adds a bone animation to a bone.
-function addBoneAnimation(elm, boneAnim) {
+export function addBoneAnimation(elm, boneAnim) {
 	switch (boneAnim.type) {
 		case 'rotate': {
 			return elm.appendChild(createSVGElement('animateTransform', {
