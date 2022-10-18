@@ -1,5 +1,5 @@
 import React, {useState, useRef, useEffect} from 'react';
-import BonesList from './components/BonesList'
+import BonesList from './components/BonesList/'
 import './App.css';
 
 function App() {
@@ -9,15 +9,20 @@ function App() {
   const refSvg = useRef();
 
   useEffect(() => {
-    console.log('useEffect', file, refSvg)
+    
     const {current} = refSvg;
     if (!current) return;
     if (!file) return;
     const newBones= current.querySelectorAll('.bone')
-    setBones(Array.from(newBones));
-    
+    const bonesFilter = Array.from(newBones).filter((bone) => {
+      const boneClass = bone.classList
 
-  }, [file, refSvg])
+      console.log('filter', bone.classList[1], boneClass[1]);
+      return bone.classList[1];
+    });
+    console.log('bonesFiltre', bonesFilter)
+    setBones(bonesFilter);
+  }, [file, refSvg]);
 
   function readFileAsync(file) {
     return new Promise((resolve, reject) => {
