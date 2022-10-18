@@ -3,10 +3,12 @@
  * Highlights the bone.
 */
 export function HighlightBone(elmSVG, boneID) {
-	console.log('Going to Highlight bone', boneID, 'on SVG', elmSVG);	
+	const elmBone = elmSVG.querySelector(boneID);
+	console.log('Going to Highlight bone', boneID, 'on SVG', elmSVG, '\n', elmBone);	
 }
 
 export function UnhighlightBone(elmSVG, boneID) {
-	console.log('Going to UN-Highlight bone', boneID, 'on SVG', elmSVG);	
+	const elmBone = elmSVG.querySelector(boneID);
+	console.log('Going to UN-Highlight bone', boneID, 'on SVG', elmSVG, '\n', elmBone);	
 	
 }
