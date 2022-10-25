@@ -4,6 +4,7 @@ import BonesList from './components/BonesList/'
 import { getBoneIds } from './utils/getBoneIds';
 
 import './App.css';
+import { HighlightBone } from './svglib/highlightBone';
 
 export function App() {
   const [file, setFile] = useState<string>();
@@ -16,6 +17,11 @@ export function App() {
     if (!current) return;
     setAllBoneIds(getBoneIds(current));
   }, [file, refSvg]);
+
+  const handleDispatch = (evt: {type: string, payload: any}) => {
+    console.log('Handle da Dispatch pa!', evt.payload);
+    HighlightBone(refSvg.current, evt.payload);
+  }
 
 
   function readFileAsync(file: File) {
@@ -45,7 +51,7 @@ export function App() {
   return <>
     <h1>File Upload</h1> 
     <input type="file" ref={refFile} onChange={handleSubmit}/>
-    <BonesList list={allBoneIds} />
+    <BonesList list={allBoneIds} onDispatch={handleDispatch} />
     <div ref={refSvg} dangerouslySetInnerHTML={{__html: file as string}} />
   </>;
 }
