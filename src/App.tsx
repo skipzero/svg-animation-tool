@@ -1,28 +1,29 @@
-import React, {useState, useRef, useEffect} from 'react';
+import React, {useState, useRef, useEffect, useMemo} from 'react';
 import BonesList from './components/BonesList/'
+import { getBoneIds } from './utils/getBoneIds';
+
 import './App.css';
 
 export function App() {
   const [file, setFile] = useState<string>();
-  const [bones, setBones] = useState<Element[]>([]);
+  // const [bones, setBones] = useState<Element[]>([]);
+  const [allBoneIds, setAllBoneIds] = useState<string[]>([]);
   const refFile = useRef<HTMLInputElement>(null);
   const refSvg = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
-    
     const {current} = refSvg;
     if (!current) return;
-    if (!file) return;
-    const newBones= (current as HTMLElement).querySelectorAll('.bone')
-    const bonesFilter = Array.from(newBones).filter((bone) => {
-      const boneClass = bone.classList
+    setAllBoneIds(getBoneIds(current));
+  }, [refSvg]);
 
-      console.log('filter', bone.classList[1], boneClass[1]);
-      return bone.classList[1];
-    });
-    console.log('bonesFiltre', bonesFilter)
-    setBones(bonesFilter);
-  }, [file, refSvg]);
+  // const boneIds = useMemo(() => {
+  //   const {current} = refSvg;
+  //   if (!current) { return; }
+  //   return getBoneIds(current);
+  // }, [refSvg.current]);
+  // const boneIds = getBoneIds(refSvg.current);
+  // console.log('boneIds ', boneIds);
 
   function readFileAsync(file: any) {
     return new Promise((resolve, reject) => {
@@ -51,20 +52,14 @@ export function App() {
       console.log(`ERROR: ${err}`);
     }
   }
-  // console.log(typeof bones)
-  // const bonesList = bones.map((bone, index) => {
-  //   console.log('+++', bone.className.baseVal)
-  //   return <li key={index}>{bone.className.baseVal}</li>
-  // })
-  return (<>
-    <h4> File Upload </h4> <input type="file" ref={refFile} onChange={handleSubmit}/>
-    <button type = "submit" > Upload </button>
-    <textarea value={file} id="file-output"></textarea>
-      <BonesList list={bones} />
-    <div ref={refSvg} dangerouslySetInnerHTML={{__html: file as string}} />
 
-    </>
-  );
+  return <>
+    <h1>File Upload</h1> 
+    <input type="file" ref={refFile} onChange={handleSubmit}/>
+    <textarea value={file} id="file-output"></textarea>
+    <BonesList list={allBoneIds} />
+    <div ref={refSvg} dangerouslySetInnerHTML={{__html: file as string}} />
+  </>;
 }
 
 export default App;
