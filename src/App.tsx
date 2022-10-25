@@ -2,18 +2,18 @@ import React, {useState, useRef, useEffect} from 'react';
 import BonesList from './components/BonesList/'
 import './App.css';
 
-function App() {
-  const [file, setFile] = useState();
-  const [bones, setBones] = useState([]);
-  const refFile  = useRef();
-  const refSvg = useRef();
+export function App() {
+  const [file, setFile] = useState<string>();
+  const [bones, setBones] = useState<Element[]>([]);
+  const refFile = useRef<HTMLInputElement>(null);
+  const refSvg = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
     
     const {current} = refSvg;
     if (!current) return;
     if (!file) return;
-    const newBones= current.querySelectorAll('.bone')
+    const newBones= (current as HTMLElement).querySelectorAll('.bone')
     const bonesFilter = Array.from(newBones).filter((bone) => {
       const boneClass = bone.classList
 
@@ -24,7 +24,7 @@ function App() {
     setBones(bonesFilter);
   }, [file, refSvg]);
 
-  function readFileAsync(file) {
+  function readFileAsync(file: any) {
     return new Promise((resolve, reject) => {
       let reader = new FileReader();
 
@@ -37,16 +37,16 @@ function App() {
     })
   }
 
-  function handleSubmit(event) {
-    const svgFile = refFile.current.files[0]
+  function handleSubmit() {
+    const svgFile = refFile?.current?.files![0];
     processFile(svgFile);
     console.log('REF', refSvg)
   }
 
-  async function processFile(file) {
+  async function processFile(file: any) {
     try {
       let fileText = await readFileAsync(file)
-      setFile(fileText)
+      setFile(fileText as string)
     } catch (err) {
       console.log(`ERROR: ${err}`);
     }
@@ -61,7 +61,7 @@ function App() {
     <button type = "submit" > Upload </button>
     <textarea value={file} id="file-output"></textarea>
       <BonesList list={bones} />
-    <div ref={refSvg} dangerouslySetInnerHTML={{__html: file}} />
+    <div ref={refSvg} dangerouslySetInnerHTML={{__html: file as string}} />
 
     </>
   );
